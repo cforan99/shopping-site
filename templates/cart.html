@@ -13,31 +13,19 @@
         </tr>
         </thead>
         <tbody>
+    <!-- This is not working! -->
+    <!-- UndefinedError: 'melon' is undefined -->
+    {% for melon_id in melon_ids %}
+    {% with melon = melon.get_by_id(melon_id) %}
         <tr>
-            <td>Ancient Watermelon</td>
-            <td>5</td>
-            <td>$3.00</td>
-            <td>$15.00</td>
+            <td>{{ melon.common_name }}</td>
+            <td>{{ melon_ids[id] }}</td>
+            <td>{{ melon.price_str() }}</td>
+            <td>{{ melon_ids[id] * melon.price }}</td>
         </tr>
-        <tr>
-            <td>Charleston Gray</td>
-            <td>2</td>
-            <td>$2.00</td>
-            <td>$4.00</td>
-        </tr>
-        <tr>
-            <td>Crenshaw</td>
-            <td>1</td>
-            <td>$2.00</td>
-            <td>$2.00</td>
-        </tr>
-        <tr>
-            <td>Ledmon Watermelon</td>
-            <td>2</td>
-            <td>$3.00</td>
-            <td>$6.00</td>
-        </tr>
-        </tbody>
+    {% endwith %}
+    {% endfor %}
+    <!-- End not working section -->
     </table>
 
     <h3>Total: $27.00</h3>
