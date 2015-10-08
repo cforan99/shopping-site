@@ -71,9 +71,28 @@ def shopping_cart():
     #   - keep track of the total amt of the entire order
     # - hand to the template the total order cost and the list of melon types
 
+
     melon_ids = session['cart'].keys()
 
-    return render_template("cart.html", melon_ids=melon_ids)
+    print session['cart']
+
+    cart_melons = {}
+
+    print "INFO! INFO! INFO! INFO!---------------"
+    print melon_ids
+
+    for id in melon_ids:
+        int_id = int(id)
+        cart_melons[int_id] = { 'name': melons.melon_types[int_id].common_name,
+                            'quantity': int(session['cart'][id]),
+                            'price': "$%.2f" % melons.melon_types[int_id].price,
+                            'total': "$%.2f" % (melons.melon_types[int_id].price 
+                                                * int(session['cart'][id])) # cart_melons[int_id]['quantity']),
+                            }
+
+    print "CART_MELONS >>>>>", cart_melons
+
+    return render_template("cart.html", cart_melons=cart_melons)
 
 
 @app.route("/add_to_cart/<int:id>")
@@ -90,12 +109,13 @@ def add_to_cart(id):
     #
     # - add the id of the melon they bought to the cart in the session
 
+    #FIXME!!!!! Quantity is not updating?
     if session.get('cart', 0) == 0:
         session['cart'] = {}
-    if session['cart'].get(id, 0) == 0:
-        session['cart'][id] = 1
+    if id in session['cart'].keys():
+        session['cart'][id] = int(session['cart'][id]) + 1
     else: 
-        session['cart'][id] += 1
+        session['cart'][id] = 1
 
     flash('Melon added to cart!')
 
@@ -133,6 +153,7 @@ def checkout():
 
     flash("Sorry! Checkout will be implemented in a future version.")
     return redirect("/melons")
+
 
 
 if __name__ == "__main__":

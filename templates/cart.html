@@ -15,15 +15,13 @@
         <tbody>
     <!-- This is not working! -->
     <!-- UndefinedError: 'melon' is undefined -->
-    {% for melon_id in melon_ids %}
-    {% with melon = melon.get_by_id(melon_id) %}
+    {% for id in cart_melons %}
         <tr>
-            <td>{{ melon.common_name }}</td>
-            <td>{{ melon_ids[id] }}</td>
-            <td>{{ melon.price_str() }}</td>
-            <td>{{ melon_ids[id] * melon.price }}</td>
+            <td>{{ cart_melons[id]['name'] }}</td>
+            <td>{{ cart_melons[id]['quantity'] }}</td>
+            <td>{{ cart_melons[id]['price'] }}</td>
+            <td>{{ cart_melons[id]['total'] }}</td>
         </tr>
-    {% endwith %}
     {% endfor %}
     <!-- End not working section -->
     </table>
