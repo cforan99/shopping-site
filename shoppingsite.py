@@ -45,7 +45,7 @@ def list_melons():
 
 @app.route("/melon/<int:melon_id>")
 def show_melon(melon_id):
-    """Return page showing the details of a given melon.
+    """Return page showing the details of a given sessionmelon.
 
     Show all info about a melon. Also, provide a button to buy that melon.
     """
@@ -103,17 +103,16 @@ def add_to_cart(id):
     page and display a confirmation message: 'Successfully added to cart'.
     """
 
-    # TODO: Finish shopping cart functionality
+    # TODO: Finish shopping cart functionality DONE
 
-    # The logic here should be something like:
-    #
-    # - add the id of the melon they bought to the cart in the session
+    # TODO: on cart.html allow users to change quantity and update the cart info
 
-    #FIXME!!!!! Quantity is not updating?
-    if session.get('cart', 0) == 0:
+    #FIXED: id is an integer but in session it is a string
+
+    if 'cart' not in session:
         session['cart'] = {}
-    if id in session['cart'].keys():
-        session['cart'][id] = int(session['cart'][id]) + 1
+    if str(id) in session['cart']:
+        session['cart'][str(id)] = int(session['cart'][str(id)]) + 1
     else: 
         session['cart'][id] = 1
 
